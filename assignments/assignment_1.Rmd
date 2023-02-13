@@ -1,0 +1,16 @@
+---
+title: "Assignment 1"
+author: "Sarah Lam"
+date: "2023-02-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### 1.Why you are taking this course
+One of my main goals in coming to Bren was to build new technical skills. Through esm206 and esm244, I found a strong interest in data analysis and want to continue to practice and utilize these skills in esm262 and esm232 in the Spring. After graduation, I am interested in pursuing positions where I can utilize my data analysis skills to support marine conservation efforts in California.  
+
+#### 2. Describes your data science background
+Before coming to Bren, I had little experience with data science. I had some experience with excel, but mostly for qualitative data tracking. I did have prior experience with GIS and wanted to build on those skills to be able to more effectively pursue GIS related employment opportunities. At Bren, I have worked to build a base knowledge of data science through taking advanced data analysis, GIS, and conservation planning. 
