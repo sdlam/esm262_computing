@@ -1,0 +1,42 @@
+---
+title: "lecture 4 example"
+author: "Sarah Lam"
+date: "2023-02-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Try this - make a random sample of fertilizer application, 10 values with mean of 5 and standard deviation of 0.5
+(user rnorm function in R to do this)
+```{r}
+fert_app <- rnorm(n = 10, mean = 5, sd = 0.5)
+```
+
+Function to computed crop yield
+Lets imagine that annual yield of a crop can be estimated follows:
+yield=1.8∗fertilizer2−0.5∗fertilizer+0.1∗TP
+and TP is mean precipitation in cm
+
+Task 1: Use a for loop to compute the total yield after 10 years
+- fertilizer is normally distributed with mean of 5 and standard deviation of 0.5
+- TP is 20cm
+```{r}
+TP = 20
+
+total_yield = for (yr in 1:10) {
+ total_yield = 
+}
+
+```
+
+Task 2: create a function to that takes as input a single value for annual fertilizer and annual total precipitation and returns yield
+
+Task 3: modify your function so that it returns total yield if the user inputs a vector of fertilizer and a vector of precipitation
+
+Check that function returns the same result as your original for loop
+
+Add some error checking and test
