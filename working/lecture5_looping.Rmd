@@ -1,0 +1,44 @@
+---
+title: "Lecture 5 Nested For Loops"
+author: "Sarah Lam"
+date: "2023-03-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Example
+Calculate NPV for
+- a range of different interest rates and
+- a range of damages
+- that may be incurred 10 years in the future
+
+Steps
+- define inputs (interest rates, damages)
+- define output (NPV)
+- write the function
+- create a data structure to store results where we vary both interest rates and damages
+- use nested for loops to fill in the data structure
+
+```{r}
+#test function 
+NPV(20, interest=0.01, n=20)
+```
+
+```{r}
+#define values 
+damages = c(25,33,91,24)
+
+interests = seq(from=0.01, to=0.04, by=0.005)
+```
+
+```{r}
+ #some data wrangling to make it pretty
+colnames(npvs)=discount_rates
+rownames(npvs)=damages
+```
+
+
+

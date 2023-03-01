@@ -1,0 +1,51 @@
+---
+title: "Autopower Exercise"
+author: "Sarah Lam"
+date: "2023-02-22"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+Compute power given a truck of m=31752 and a vehicle of m=15000 kg (parameters for a heavy truck) for a range of different highway speeds, The surface area of this truck is 16 m2
+30 m/s
+80 km/hr
+120 km/hr
+40 km/hr
+5 km/hr
+
+```{r}
+#speeds for both vehicles
+speeds <- speed_conversion(speed=c(80, 120, 40, 5))
+speeds <- append(speeds,30)
+```
+
+```{r}
+#power for vehicle 1 (heavy)
+power1 <- auto_power_gen(mass=31752, speed=speeds, A=16)
+```
+
+```{r}
+#power for vehicle 2 (lighter)
+power2 <- auto_power_gen(mass=15000, speed=speeds, A=16)
+```
+
+```{r}
+#combine powers and speed into one data frame for visualization
+power_speed <- data.frame(power1, power2, speeds)
+```
+
+```{r}
+ggplot(data=power_speed) +
+  geom_line( aes(x=speeds, y = power1, color = "Heavy Truck")) +
+  geom_line(aes(x=speeds, y = power2, color = "Lighter Vehicle")) +
+  labs(x = "Speed (meters/second)",
+       y = "Power (W)", 
+       title = "Power generation by light and heavy automobile",
+       color = "") +
+  theme_minimal()
+```
+
