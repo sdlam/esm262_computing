@@ -11,7 +11,7 @@
 #' @return power (W)
 
 # function definition
-auto_power_gen = function(crolling=0.015, mass, g=9.8, speed, A, pair=1.2, cdrag=0.3) {
+autopower = function(crolling=0.015, mass, g=9.8, speed, A, pair=1.2, cdrag=0.3) {
   result = crolling * mass * g * speed + 1/2 * A * pair * cdrag * speed^3
   return(result)
 }

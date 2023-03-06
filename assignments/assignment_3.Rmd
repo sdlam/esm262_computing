@@ -9,5 +9,89 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
+library(purrr)
+library(ggpubr)
+```
+
+```{r}
+#create data frame of possible cars with new car D added with mass of 5000kg and surface area of 10 m2
+possible_cars = data.frame(name = c("A","B","C","D"),mass=c(10000,65000,38000,5000), area = c(22,30,22,10))
+```
+
+Compute the mean and maximum power for Cars A, B, C and for your new car
+- Average highway speed is 80 km/hr with a standard deviation of 10km/hr; 
+- Use 2 different methods to compute the mean and maximum power for each car type
+```{r}
+# use sample to generate a log normal distribution of speeds with mean 80km/hr converted in m/s for the function
+nsample = 200 #create sample of a 200 speeds
+mean_speed = log(80*0.277)
+sd_speed = log(10*0.277)
+
+speeds = rlnorm(mean=mean_speed, sd=sd_speed, nsample)
+summary(speeds)
+```
+
+```{r}
+# using a FOR loop estimate mean and max power use for each car
+
+# create a data frame to store results with one column for each car and one row for each speed
+powerall1 = as.data.frame(matrix(nrow=length(speeds), ncol=nrow(possible_cars))) # because we don't initialize it - values are NA
+
+# index i, from 1 to nrow(possible_cars), and calculate powers for all four cars
+for (i in 1:nrow(possible_cars)) {
+  powerall1[,i] = autopower(A=possible_cars$area[i], mass=possible_cars$mass[i], speed=speeds)
+}
+
+colnames(powerall1) <- possible_cars$name #add column names
+
+# calculate mean and max 
+forloop_meanmax <- as.data.frame(matrix(nrow = 2, ncol = nrow(possible_cars))) #store values in data frame
+
+for (i in 1:ncol(powerall1)) {
+  forloop_meanmax[1,i] = mean(powerall1[,i])
+  forloop_meanmax[2,i] = max(powerall1[,i])
+}
+
+rownames(forloop_meanmax) <- c("mean", "maximum") #add row names
+```
+
+```{r}
+# using the pmap function from purr, pmap runs a function for each value in a list of parameters, with other parameters set for each iteration
+# estimate mean and max power use given each car
+# the first part, generating speeds is the same
+
+powerall2 = pmap(list(A = possible_cars$area, mass=possible_cars$mass), autopower, speed=speeds)
+
+# Turn into data frame for easier graphing and add column names
+powerall2 = as.data.frame(powerall2, col.names=possible_cars$name)
+
+# Calculate mean and max using map to run the functions over each column 
+powerall2 %>% map(mean)
+powerall2 %>% map(max)
+
+```
+
+Create two boxplots (one for each method (FOR and pmap)) that show the range of power consumption (across sampled speeds) for each car type.
+```{r}
+# for plotting sometimes its useful to turn columns in to rows, use pivot_longer()
+powerall1_plot <-  powerall1 %>% 
+  pivot_longer(cols=everything(), names_to="car", values_to="power")
+
+powerall2_plot <-  powerall2 %>% 
+  pivot_longer(cols=everything(), names_to="car", values_to="power")
+
+# quick visualization
+forloop_plot <-  ggplot(powerall1_plot, aes(car,power, fill=car))+
+  geom_boxplot() +
+  ggtitle("For Loop") +
+  theme_minimal()
+
+pmap_plot <- ggplot(powerall2_plot, aes(car,power, fill=car)) +
+  geom_boxplot() +
+  ggtitle("pmap") +
+  theme_minimal()
+
+ggarrange(forloop_plot, pmap_plot) #put plots side by side
+
 ```
 
