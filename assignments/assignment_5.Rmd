@@ -1,0 +1,33 @@
+---
+title: 'Assignment 5: Flow Control'
+author: "Sarah Lam"
+date: "2023-03-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(here)
+```
+
+```{r}
+fish_txt <- read.delim(here("data/fish.txt"))
+colnames(fish_txt) <- 'fish_species'
+
+fish_vector <- fish_txt[[1]]
+```
+
+Write a function that takes a vector of fish names and always returns three items
+Find:
+- the most common fish,
+- the rarest fish
+- the total number of fish
+
+```{r}
+source(here("R/fish_findr.R"))
+
+fish_findr(fish_vector)
+```
+
