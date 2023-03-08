@@ -7,26 +7,22 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
+#load packages
 library(tidyverse)
 library(here)
 ```
 
 ```{r}
-fish_txt <- read.delim(here("data/fish.txt"))
-colnames(fish_txt) <- 'fish_species'
+fish_txt <- read.delim(here("data/fish.txt")) #read in data 
+colnames(fish_txt) <- 'fish_species' #update column name in data frame 
 
-fish_vector <- fish_txt[[1]]
+fish_vector <- fish_txt[[1]] #convert data to vector for input into function
 ```
 
-Write a function that takes a vector of fish names and always returns three items
-Find:
-- the most common fish,
-- the rarest fish
-- the total number of fish
-
 ```{r}
-source(here("R/fish_findr.R"))
+#test function that takes a vector of fish names and returns the most common fish, the rarest fish, and the total number of fish
+
+source(here("R/fish_findr.R")) #load in the function
 
 fish_findr(fish_vector)
 ```
