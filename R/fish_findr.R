@@ -19,5 +19,5 @@ fish_findr = function(data) {
   
   
   # output from function
-  return(list(num=nfish, common=common, rarest=rarest))
+  return(sprintf("The most common fish caught is %s. The rarest fish caught is %s. The total number of fish caught is %d.", common, rarest, nfish))
 }
